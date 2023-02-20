@@ -118,16 +118,17 @@ class Hook {
 	) {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
 
-		$store = self::getWatchedItemStore();
+		$catTitle = $cat->getTitle();
 
 		# Is anyone watching the category?
-		if ( $store->countWatchers( $cat->getTitle() ) > 0 ) {
+		$store = self::getWatchedItemStore();
+		if ( self::automaticallyWatchingUser( $catTitle ) || $store->countWatchers( $catTitle ) > 0 ) {
 			# Send them a notification!
 			$user = User::newFromId( $page->getUser() );
 
 			EchoEvent::create( [
 				'type' => 'categorywatch-add',
-				'title' => $cat->getTitle(),
+				'title' => $catTitle,
 				'agent' => $user,
 				'extra' => [
 					'pageid' => $page->getId(),
@@ -136,7 +137,7 @@ class Hook {
 			] );
 		}
 		$watchers = [];
-		foreach ( self::getWatchers( $cat->getTitle() ) as $watcher ) {
+		foreach ( self::getWatchers( $catTitle ) as $watcher ) {
 			if ( method_exists( MediaWikiServices::class, 'getUserOptionsLookup' ) ) {
 				// MediaWiki 1.35+
 				if ( MediaWikiServices::getInstance()->getUserOptionsLookup()
@@ -260,7 +261,7 @@ class Hook {
 	 */
 	private static function getWatchers( Title $target ) {
 		$dbr = wfGetDB( DB_REPLICA );
-		$return = $dbr->selectFieldValues(
+		$result = $dbr->selectFieldValues(
 			'watchlist',
 			'wl_user',
 			[
@@ -270,9 +271,16 @@ class Hook {
 			__METHOD__
 		);
 
-		return array_map( static function ( $userID ) {
+		$result = array_map( static function ( $userID ) {
 			return User::newFromID( $userID );
-		}, $return );
+		}, $result );
+
+		$user = self::automaticallyWatchingUser( $target );
+		if ( $user ) {
+			$result[] = User::newFromName( $user );
+		}
+
+		return $result;
 	}
 
 	/**
@@ -295,5 +303,18 @@ class Hook {
 	public static function userFilter( EchoEvent $event ) {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
 		return [ $event->getAgent() ];
+	}
+
+	/**
+	 * Get name of possible automatically watching user which means category is
+	 * of the form "Automatically watched by <USERNAME>"
+	 *
+	 * @param Title $title category title
+	 * @return string|false
+	 */
+	private static function automaticallyWatchingUser( Title $title ) {
+		return preg_match( "/^Automatically watched by (.*)$/", $title->getText(), $matches )
+			? $matches[1]
+			: false;
 	}
 }
