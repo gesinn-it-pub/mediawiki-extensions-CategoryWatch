@@ -140,17 +140,17 @@ class Hook {
 			if ( method_exists( MediaWikiServices::class, 'getUserOptionsLookup' ) ) {
 				// MediaWiki 1.35+
 				if ( MediaWikiServices::getInstance()->getUserOptionsLookup()
-					->getOption( $watcher, 'catwatch-watch-pages' )
+					->getOption( $watcher, 'categorywatch-page-watch' )
 				) {
 					$watchers[] = $watcher;
 				}
 			} else {
-				if ( $watcher->getOption( 'catwatch-watch-pages' ) ) {
+				if ( $watcher->getOption( 'categorywatch-page-watch' ) ) {
 					$watchers[] = $watcher;
 				}
 			}
 		}
-		self::addUserBatchForWatch( $watchers, $cat->getTitle() );
+		self::addUserBatchForWatch( $watchers, $page->getTitle() );
 	}
 
 	/**
