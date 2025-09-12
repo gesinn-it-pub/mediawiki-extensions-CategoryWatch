@@ -200,7 +200,7 @@ class Hook {
 			// https://gerrit.wikimedia.org/r/#/c/319255/2/includes/WatchedItemStore.php
 		}
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 		foreach ( array_chunk( $rows, 100 ) as $toInsert ) {
 			// Use INSERT IGNORE to avoid overwriting the notification timestamp
 			// if there's already an entry for this page
@@ -233,7 +233,8 @@ class Hook {
 			->countWatchers( $cat->getTitle() ) > 0
 		) {
 			# Send them a notification!
-			$user = User::newFromId( $page->getUser() );
+			$user = MediaWikiServices::getInstance()->getUserFactory()
+				->newFromId( $page->getUser() );
 
 			$revId = null;
 			$rev = $page->getRevision();
@@ -260,7 +261,7 @@ class Hook {
 	 * @return array
 	 */
 	private static function getWatchers( Title $target ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$result = $dbr->selectFieldValues(
 			'watchlist',
 			'wl_user',
