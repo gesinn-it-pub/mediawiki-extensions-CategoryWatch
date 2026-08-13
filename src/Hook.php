@@ -26,14 +26,14 @@ use EchoEvent;
 use MediaWiki\MediaWikiServices;
 use Title;
 use User;
-use WatchedItemStore;
+use WatchedItemStoreInterface;
 use WikiPage;
 
 class Hook {
 	/**
 	 * Explain bundling
 	 *
-	 * @param Event $event to bundle
+	 * @param EchoEvent $event to bundle
 	 * @param string &$bundleString to use
 	 */
 	public static function onEchoGetBundleRules( EchoEvent $event, &$bundleString ) {
@@ -96,15 +96,11 @@ class Hook {
 
 	/**
 	 * Internal compatibility function
-	 * @return WatchedItemStore
+	 * @return WatchedItemStoreInterface
 	 */
 	private static function getWatchedItemStore() {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
-		if ( method_exists( 'WatchedItemStore', 'getDefaultInstance' ) ) {
-			return WatchedItemStore::getDefaultInstance();
-		} else {
-			return MediaWikiServices::getInstance()->getWatchedItemStore();
-		}
+		return MediaWikiServices::getInstance()->getWatchedItemStore();
 	}
 
 	/**
@@ -126,13 +122,15 @@ class Hook {
 			# Send them a notification!
 			$user = User::newFromId( $page->getUser() );
 
+			$revRecord = $page->getRevisionRecord();
+
 			EchoEvent::create( [
 				'type' => 'categorywatch-add',
 				'title' => $catTitle,
 				'agent' => $user,
 				'extra' => [
 					'pageid' => $page->getId(),
-					'revid' => $page->getRevision()->getId(),
+					'revid' => $revRecord ? $revRecord->getId() : null,
 				],
 			] );
 		}
@@ -237,7 +235,7 @@ class Hook {
 				->newFromId( $page->getUser() );
 
 			$revId = null;
-			$rev = $page->getRevision();
+			$rev = $page->getRevisionRecord();
 			if ( $rev ) {
 				$revId = $rev->getId();
 			}

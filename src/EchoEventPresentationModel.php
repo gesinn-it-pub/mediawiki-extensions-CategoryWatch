@@ -125,6 +125,10 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 			$page = MediaWikiServices::getInstance()->getWikiPageFactory()
 				->newFromID( $this->event->getExtraParam( "pageid" ) );
 		} else {
+			// MediaWiki 1.35.x: getWikiPageFactory() doesn't exist yet, and
+			// newFromId() was only removed in later versions than this
+			// extension's minimum supported MediaWiki version.
+			// @phan-suppress-next-line PhanUndeclaredStaticMethod
 			$page = WikiPage::newFromId( $this->event->getExtraParam( "pageid" ) );
 		}
 		return $page ? $page->getTitle() : Title::makeTitle( NS_SPECIAL, 'Badtitle/' . __METHOD__ );
@@ -170,7 +174,6 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 	/**
 	 * override parent
 	 * @return array
-	 * @throws TimestampException
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
@@ -180,7 +183,7 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 		return [
 			'header' => $this->getHeaderMessage()->parse(),
 			'compactHeader' => $this->getCompactHeaderMessage()->parse(),
-			'body' => $body ? $body->toString() : '',
+			'body' => $body ? $body->toString( Message::FORMAT_TEXT ) : '',
 			'icon' => $this->getIconType(),
 			'links' => [
 				'primary' => $this->getPrimaryLinkWithMarkAsRead() ?: [],

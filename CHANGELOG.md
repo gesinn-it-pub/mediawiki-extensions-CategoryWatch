@@ -24,6 +24,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.phpcs.xml` now excludes `vendor/`, `node_modules/`, `build/`, `coverage/`, and
   `.phan/` so build artifacts and analysis config are no longer scanned.
 
+### Fixed
+
+- `Hook::getWatchedItemStore()` kept a `WatchedItemStore::getDefaultInstance()`
+  fallback that was already removed in this extension's minimum supported MediaWiki
+  version (1.35.3); dropped the dead branch and typed the return as
+  `WatchedItemStoreInterface`.
+- `Hook::onCategoryAfterPageAdded()`/`onCategoryAfterPageRemoved()` called the
+  deprecated `WikiPage::getRevision()`, which no longer exists on current MediaWiki;
+  switched to `getRevisionRecord()`.
+- `EchoEventPresentationModel::jsonSerialize()` called `Message::toString()` without
+  its now-required `$format` argument, and carried a stale `@throws TimestampException`
+  doc-block for an exception the method never throws.
+- Doc-block of `$event` in `Hook::onEchoGetBundleRules()` declared a non-existent
+  `Event` type instead of `EchoEvent`.
+
 ## [2.0.1] - 2026-08-12
 
 ### Changed
