@@ -15,6 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   instead of accepting either the old `\ReadOnlyMode` or the new namespaced class
   via a `method_exists()` check).
 
+### Changed
+
+- Dropped the MW 1.39 CI matrix leg; 1.43 is now the floor/stable/coverage leg,
+  with 1.46 as the experimental leg.
+- Bumped `mediawiki/mediawiki-codesniffer` to 51.0.1, `mediawiki/mediawiki-phan-config`
+  to 0.20.0, `mediawiki/minus-x` to 2.0.1, and `eslint-config-wikimedia` to 0.32.5.
+
+### Fixed
+
+- Excluded `coverage/` from the Gruntfile's `eslint:all` glob. The generated
+  PHPUnit HTML coverage report vendors minified JS (`d3.min.js`, `jquery.min.js`,
+  etc.) that was being linted whenever the directory existed locally.
+
 ## [3.0.0] - 2026-08-13
 
 Raises the minimum supported MediaWiki version to 1.39, extracts the notification
