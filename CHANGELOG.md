@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **BREAKING**: Raised the minimum supported MediaWiki version from 1.35.3 to 1.39.
+  Dropped the now-dead MW-1.35/1.36 compatibility fallbacks this required
+  (`WatchedItemStore::getDefaultInstance()`, `UserOptionsLookup` `method_exists()`
+  check, `WikiPage::newFromId()`/`getWikiPageFactory()` guard).
+- CI matrix aligned with IDProvider: dropped the MW 1.35 leg, added an experimental
+  MW 1.46/PHP 8.5 leg. Echo is now activated (`ECHO_VERSION`) on the 1.43 and 1.46
+  legs — Echo has no `REL1_39` branch, so the 1.39 leg runs without it, same as
+  before this change.
+- Bumped `mediawiki/mediawiki-codesniffer` to 48.0.0 and `mediawiki/mediawiki-phan-config`
+  to 0.16.0, matching IDProvider's versions (both compatible with the CI matrix's
+  PHP 8.1 floor).
+
 ### Fixed
 
 - `EchoEventPresentationModel::jsonSerialize()` didn't declare a return type, relying
