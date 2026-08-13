@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`CategoryWatchNotifier` now type-hints `Wikimedia\Rdbms\ReadOnlyMode` directly
   instead of accepting either the old `\ReadOnlyMode` or the new namespaced class
   via a `method_exists()` check).
+- Migrated `Title` and `Category` to their namespaced FQCNs
+  (`MediaWiki\Title\Title`, `MediaWiki\Category\Category`) throughout `src/` and
+  `tests/`. MediaWiki removed the global-namespace aliases for both between the
+  1.43 and 1.44 branch cuts, so the bare `\Title`/`\Category` forms this
+  extension used stop resolving on MW >= 1.44.
 
 ### Changed
 
@@ -27,6 +32,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Excluded `coverage/` from the Gruntfile's `eslint:all` glob. The generated
   PHPUnit HTML coverage report vendors minified JS (`d3.min.js`, `jquery.min.js`,
   etc.) that was being linted whenever the directory existed locally.
+- `EchoEventPresentationModel` now stringifies `Title` objects
+  (`getPrefixedText()`) before passing them to `Message::params()` instead of
+  passing the object directly. This always worked at runtime via implicit
+  `__toString()`, but the stricter type stubs in `mediawiki-phan-config` 0.20.0
+  correctly flag it as a type mismatch. Also corrects
+  `getRevisionEditSummary()`'s `@return` docblock from `string` to `Message`,
+  matching what it actually returns.
 
 ## [3.0.0] - 2026-08-13
 
