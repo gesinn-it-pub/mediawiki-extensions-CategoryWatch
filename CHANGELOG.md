@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `EchoEventPresentationModel::jsonSerialize()` didn't declare a return type, relying
+  on `#[\ReturnTypeWillChange]` to suppress the resulting deprecation notice. Current
+  Echo declares `jsonSerialize(): array` on the parent class, so the mismatched child
+  signature is a PHP fatal error on MediaWiki versions bundling that Echo release.
+  Cherry-picked from upstream
+  ([f98325b](https://github.com/wikimedia/mediawiki-extensions-CategoryWatch/commit/f98325bce0062695e6122a24de84ca706d670647)).
+
 ### Added
 
 - Phan static analysis, wired into CI as a dedicated step on the coverage matrix row.

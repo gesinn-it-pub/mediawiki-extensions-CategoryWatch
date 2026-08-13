@@ -173,10 +173,8 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 
 	/**
 	 * override parent
-	 * @return array
 	 */
-	#[\ReturnTypeWillChange]
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
 		$body = $this->getBodyMessage();
 
