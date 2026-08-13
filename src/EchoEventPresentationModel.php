@@ -62,9 +62,9 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 			$msg->params( $this->getViewingUserForGender() );
 		} else {
 			$msg = $this->msg( 'categorywatch-notification-' . $this->event->getType() . '-header' );
-			$msg->params( $this->getPageTitle() );
+			$msg->params( $this->getPageTitle()->getPrefixedText() );
 			$msg->params( $this->getTruncatedTitleText( $this->getPageTitle(), true ) );
-			$msg->params( $this->event->getTitle() );
+			$msg->params( $this->event->getTitle()->getPrefixedText() );
 			$msg->params( $this->getTruncatedTitleText( $this->event->getTitle(), true ) );
 		}
 		return $msg;
@@ -85,16 +85,16 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 	/**
 	 * Summary of edit
 	 *
-	 * @return string
+	 * @return Message
 	 */
 	public function getRevisionEditSummary() {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
 		$msg = $this->getMessageWithAgent(
 			'categorywatch-notification-' . $this->event->getType() . '-summary'
 		);
-		$msg->params( $this->getPageTitle() );
+		$msg->params( $this->getPageTitle()->getPrefixedText() );
 		$msg->params( $this->getTruncatedTitleText( $this->getPageTitle(), true ) );
-		$msg->params( $this->event->getTitle() );
+		$msg->params( $this->event->getTitle()->getPrefixedText() );
 		$msg->params( $this->getTruncatedTitleText( $this->event->getTitle(), true ) );
 		return $msg;
 	}
@@ -109,8 +109,8 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 		$msg = $this->getMessageWithAgent(
 			'categorywatch-notification-' . $this->event->getType() . '-body'
 		);
-		$msg->params( $this->getPageTitle() );
-		$msg->params( $this->event->getTitle() );
+		$msg->params( $this->getPageTitle()->getPrefixedText() );
+		$msg->params( $this->event->getTitle()->getPrefixedText() );
 		return $msg;
 	}
 
@@ -133,7 +133,7 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
 		$title = $this->event->getTitle();
 		$msg = $this->msg( 'categorywatch-notification-link' );
-		$msg->params( $title );
+		$msg->params( $title->getPrefixedText() );
 		return [
 			'url' => $title->getFullURL(),
 			'label' => $title->getPrefixedText()
