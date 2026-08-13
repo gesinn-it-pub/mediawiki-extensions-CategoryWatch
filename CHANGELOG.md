@@ -7,8 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Unit test coverage for `Hook`, `CategoryWatchHooks`, `CategoryWatchNotifier`, and
+  `EchoEventPresentationModel` — the extension previously shipped with zero PHPUnit
+  tests despite having a `tests/phpunit/Unit` directory.
+
+### Changed
+
+- Extracted the category-watcher/notification logic from the static `Hook` class into
+  `CategoryWatchNotifier`, an injectable service registered via `src/ServiceWiring.php`.
+  The `CategoryAfterPageAdded`, `CategoryAfterPageRemoved`, and `GetPreferences` hooks
+  moved onto a new instance-based `CategoryWatchHooks` handler implementing MediaWiki's
+  hook interfaces, wired through `extension.json`'s `HookHandlers`, mirroring the pattern
+  used in the DisplayTitle extension. `Hook` now only holds the Echo-related static
+  callbacks (`onEchoGetBundleRules`, `onBeforeCreateEchoEvent`, `userLocater`,
+  `userFilter`), since Echo is an optional dependency whose hook interfaces don't exist
+  when Echo isn't loaded.
+
 ### Fixed
 
+- `phpunit-coverage`'s `--coverage-*` flags were appended after `@phpunit`'s closing
+  `bash -c '...'` quote instead of being passed into it, so PHPUnit ran without coverage
+  instrumentation and no `coverage.xml`/HTML report was ever generated despite tests
+  passing.
 - `composer phpunit`/`phpunit-coverage` called the deprecated
   `tests/phpunit/phpunit.php` maintenance-script entry point, which MediaWiki 1.46
   removes outright ("Could not open input file"). Migrated to `vendor/bin/phpunit`
