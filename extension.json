@@ -14,9 +14,14 @@
 		"MediaWiki": ">= 1.39"
 	},
 	"AutoloadClasses": {
+		"CategoryWatch\\CategoryWatchHooks": "src/CategoryWatchHooks.php",
+		"CategoryWatch\\CategoryWatchNotifier": "src/CategoryWatchNotifier.php",
 		"CategoryWatch\\EchoEventPresentationModel": "src/EchoEventPresentationModel.php",
 		"CategoryWatch\\Hook": "src/Hook.php"
 	},
+	"ServiceWiringFiles": [
+		"src/ServiceWiring.php"
+	],
 	"MessagesDirs": {
 		"CategoryWatch": "i18n"
 	},
@@ -24,12 +29,20 @@
 		"echo-subscriptions-email-categorywatch": true,
 		"echo-subscriptions-web-categorywatch": true
 	},
+	"HookHandlers": {
+		"main": {
+			"class": "CategoryWatch\\CategoryWatchHooks",
+			"services": [
+				"CategoryWatch.Notifier"
+			]
+		}
+	},
 	"Hooks": {
 		"BeforeCreateEchoEvent": "CategoryWatch\\Hook::onBeforeCreateEchoEvent",
 		"EchoGetBundleRules": "CategoryWatch\\Hook::onEchoGetBundleRules",
-		"CategoryAfterPageAdded": "CategoryWatch\\Hook::onCategoryAfterPageAdded",
-		"CategoryAfterPageRemoved": "CategoryWatch\\Hook::onCategoryAfterPageRemoved",
-		"GetPreferences": "CategoryWatch\\Hook::onGetPreferences"
+		"CategoryAfterPageAdded": "main",
+		"CategoryAfterPageRemoved": "main",
+		"GetPreferences": "main"
 	},
 	"manifest_version": 1
 }
