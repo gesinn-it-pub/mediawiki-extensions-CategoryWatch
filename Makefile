@@ -11,8 +11,8 @@ endif
 EXTENSION=CategoryWatch
 
 # docker images
-MW_VERSION?=1.39
-PHP_VERSION?=8.1
+MW_VERSION?=1.43
+PHP_VERSION?=8.2
 DB_TYPE?=mysql
 DB_IMAGE?="mysql:8"
 
