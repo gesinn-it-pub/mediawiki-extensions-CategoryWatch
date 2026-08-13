@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking Changes
+
+- Raised the minimum supported MediaWiki version from 1.39 to 1.43. Dropped the
+  now-dead MW-1.39/1.40 `ReadOnlyMode` compatibility fallback this required
+  (`CategoryWatchNotifier` now type-hints `Wikimedia\Rdbms\ReadOnlyMode` directly
+  instead of accepting either the old `\ReadOnlyMode` or the new namespaced class
+  via a `method_exists()` check).
+
 ## [3.0.0] - 2026-08-13
 
 Raises the minimum supported MediaWiki version to 1.39, extracts the notification
