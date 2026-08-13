@@ -7,38 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-08-13
+
+Raises the minimum supported MediaWiki version to 1.43 and removes the
+now-unsupported global `Title`/`Category` class names, keeping the extension
+working on current MediaWiki releases.
+
 ### Breaking Changes
 
 - Raised the minimum supported MediaWiki version from 1.39 to 1.43. Dropped the
   now-dead MW-1.39/1.40 `ReadOnlyMode` compatibility fallback this required
   (`CategoryWatchNotifier` now type-hints `Wikimedia\Rdbms\ReadOnlyMode` directly
   instead of accepting either the old `\ReadOnlyMode` or the new namespaced class
-  via a `method_exists()` check).
+  via a `method_exists()` check)
+  [`b271549`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/b271549).
 - Migrated `Title` and `Category` to their namespaced FQCNs
   (`MediaWiki\Title\Title`, `MediaWiki\Category\Category`) throughout `src/` and
   `tests/`. MediaWiki removed the global-namespace aliases for both between the
   1.43 and 1.44 branch cuts, so the bare `\Title`/`\Category` forms this
-  extension used stop resolving on MW >= 1.44.
+  extension used stop resolving on MW >= 1.44
+  [`b5d6dbf`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/b5d6dbf).
 
 ### Changed
 
 - Dropped the MW 1.39 CI matrix leg; 1.43 is now the floor/stable/coverage leg,
-  with 1.46 as the experimental leg.
+  with 1.46 as the experimental leg
+  [`23c8f3a`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/23c8f3a).
 - Bumped `mediawiki/mediawiki-codesniffer` to 51.0.1, `mediawiki/mediawiki-phan-config`
-  to 0.20.0, `mediawiki/minus-x` to 2.0.1, and `eslint-config-wikimedia` to 0.32.5.
+  to 0.20.0, and `mediawiki/minus-x` to 2.0.1
+  [`51b83af`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/51b83af),
+  and `eslint-config-wikimedia` to 0.32.5
+  [`7f44260`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/7f44260).
 
 ### Fixed
 
 - Excluded `coverage/` from the Gruntfile's `eslint:all` glob. The generated
   PHPUnit HTML coverage report vendors minified JS (`d3.min.js`, `jquery.min.js`,
-  etc.) that was being linted whenever the directory existed locally.
+  etc.) that was being linted whenever the directory existed locally
+  [`38bb4c0`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/38bb4c0).
 - `EchoEventPresentationModel` now stringifies `Title` objects
   (`getPrefixedText()`) before passing them to `Message::params()` instead of
   passing the object directly. This always worked at runtime via implicit
   `__toString()`, but the stricter type stubs in `mediawiki-phan-config` 0.20.0
   correctly flag it as a type mismatch. Also corrects
   `getRevisionEditSummary()`'s `@return` docblock from `string` to `Message`,
-  matching what it actually returns.
+  matching what it actually returns
+  [`4cd744f`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/4cd744f).
 
 ## [3.0.0] - 2026-08-13
 
@@ -171,6 +185,7 @@ coverage.
 
 - `tests/phpunit/Unit` directory scaffolded for future PHPUnit coverage.
 
-[Unreleased]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/3.0.0...HEAD
+[Unreleased]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/2.0.1...3.0.0
 [2.0.1]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/releases/tag/2.0.1
