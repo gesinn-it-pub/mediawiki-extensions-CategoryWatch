@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `eslint:all` in `Gruntfile.js` only excluded `node_modules/` and `vendor/`, so a
+  locally generated `build/coverage/php/_js/*.min.js` (bundled jQuery/Bootstrap/D3
+  from the HTML coverage report) got linted as extension source, producing ~175k
+  bogus errors and aborting `grunt test`. Excluded `build/` from the glob.
+
+### Changed
+
+- Bumped `grunt` from 1.6.1 to 1.6.3, resolving 7 high-severity Dependabot alerts
+  (`js-yaml`, `lodash`, `minimatch`, `brace-expansion`, `picomatch`, `flatted`)
+  carried transitively through `grunt`/`grunt-legacy-*`. `npm audit` now reports 0
+  vulnerabilities.
+
 ### Added
 
 - Unit test coverage for `Hook`, `CategoryWatchHooks`, `CategoryWatchNotifier`, and
