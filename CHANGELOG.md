@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `composer phpunit`/`phpunit-coverage` called the deprecated
+  `tests/phpunit/phpunit.php` maintenance-script entry point, which MediaWiki 1.46
+  removes outright ("Could not open input file"). Migrated to `vendor/bin/phpunit`
+  with `generatePHPUnitConfig.php`, per the pattern IDProvider already uses.
+
 ### Changed
 
 - **BREAKING**: Raised the minimum supported MediaWiki version from 1.35.3 to 1.39.
