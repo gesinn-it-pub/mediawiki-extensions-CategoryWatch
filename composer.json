@@ -33,6 +33,7 @@
 			"@phpcs-fix"
 		],
 		"lint": "parallel-lint . --exclude vendor --exclude node_modules",
+		"phan": "phan --allow-polyfill-parser --long-progress-bar",
 		"phpcs": "phpcs -ps",
 		"phpcs-fix": "phpcbf -p",
 		"phpunit": "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist --testdox",

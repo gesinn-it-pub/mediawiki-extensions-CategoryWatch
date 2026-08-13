@@ -30,6 +30,7 @@ jobs:
             experimental: false
           - mediawiki_version: '1.43'
             php_version: 8.2
+            echo_version: REL1_43
             database_type: mysql
             database_image: "mariadb:11.2"
             coverage: true
@@ -38,6 +39,7 @@ jobs:
     env:
       MW_VERSION: ${{ matrix.mediawiki_version }}
       PHP_VERSION: ${{ matrix.php_version }}
+      ECHO_VERSION: ${{ matrix.echo_version }}
       DB_TYPE: ${{ matrix.database_type }}
       DB_IMAGE: ${{ matrix.database_image }}
 
@@ -64,4 +66,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: gesinn-it-pub/mediawiki-extensions-CategoryWatch
           files: build/coverage/php/coverage.xml
+        if: matrix.coverage == true
+
+      - name: Run Phan static analysis
+        run: make install composer-phan
         if: matrix.coverage == true

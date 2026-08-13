@@ -10,4 +10,5 @@
 	<exclude-pattern type="relative">^node_modules/</exclude-pattern>
 	<exclude-pattern type="relative">^build/</exclude-pattern>
 	<exclude-pattern type="relative">^coverage/</exclude-pattern>
+	<exclude-pattern type="relative">^\.phan/</exclude-pattern>
 </ruleset>
