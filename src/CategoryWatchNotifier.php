@@ -28,40 +28,25 @@ use MediaWiki\User\UserOptionsLookup;
 use Title;
 use WatchedItemStoreInterface;
 use Wikimedia\Rdbms\ILoadBalancer;
+use Wikimedia\Rdbms\ReadOnlyMode;
 use WikiPage;
 
 class CategoryWatchNotifier {
-
-	/**
-	 * Result of MediaWikiServices::getReadOnlyMode(); untyped because that
-	 * method's return type is \ReadOnlyMode on MW < 1.41 and
-	 * \Wikimedia\Rdbms\ReadOnlyMode on MW >= 1.41.
-	 *
-	 * @var \ReadOnlyMode|\Wikimedia\Rdbms\ReadOnlyMode
-	 */
-	private $readOnlyMode;
 
 	/**
 	 * @param WatchedItemStoreInterface $watchedItemStore to check/read watchers
 	 * @param ILoadBalancer $loadBalancer for direct watchlist table access
 	 * @param UserOptionsLookup $userOptionsLookup to read user preferences
 	 * @param UserFactory $userFactory to construct User objects
-	 * @param \ReadOnlyMode|\Wikimedia\Rdbms\ReadOnlyMode $readOnlyMode result
-	 *        of MediaWikiServices::getReadOnlyMode()
+	 * @param ReadOnlyMode $readOnlyMode result of MediaWikiServices::getReadOnlyMode()
 	 */
 	public function __construct(
 		private readonly WatchedItemStoreInterface $watchedItemStore,
 		private readonly ILoadBalancer $loadBalancer,
 		private readonly UserOptionsLookup $userOptionsLookup,
 		private readonly UserFactory $userFactory,
-		$readOnlyMode
+		private readonly ReadOnlyMode $readOnlyMode
 	) {
-		if ( !method_exists( $readOnlyMode, 'isReadOnly' ) ) {
-			throw new \InvalidArgumentException(
-				'$readOnlyMode must be a ReadOnlyMode instance (got ' . get_debug_type( $readOnlyMode ) . ')'
-			);
-		}
-		$this->readOnlyMode = $readOnlyMode;
 	}
 
 	/**

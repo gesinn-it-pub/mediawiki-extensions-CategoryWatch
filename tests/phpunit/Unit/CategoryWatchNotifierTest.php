@@ -12,22 +12,13 @@ use User;
 use WatchedItemStoreInterface;
 use Wikimedia\Rdbms\IDatabase;
 use Wikimedia\Rdbms\ILoadBalancer;
+use Wikimedia\Rdbms\ReadOnlyMode;
 use WikiPage;
 
 /**
  * @covers \CategoryWatch\CategoryWatchNotifier
  */
 class CategoryWatchNotifierTest extends MediaWikiUnitTestCase {
-
-	/**
-	 * @return class-string ReadOnlyMode's FQCN on this MW version: \ReadOnlyMode
-	 *         on MW < 1.41, \Wikimedia\Rdbms\ReadOnlyMode on MW >= 1.41
-	 */
-	private static function readOnlyModeClass(): string {
-		return class_exists( \Wikimedia\Rdbms\ReadOnlyMode::class )
-			? \Wikimedia\Rdbms\ReadOnlyMode::class
-			: \ReadOnlyMode::class;
-	}
 
 	private function newNotifier(
 		?WatchedItemStoreInterface $watchedItemStore = null,
@@ -41,7 +32,7 @@ class CategoryWatchNotifierTest extends MediaWikiUnitTestCase {
 			$loadBalancer ?? $this->createMock( ILoadBalancer::class ),
 			$userOptionsLookup ?? $this->createMock( UserOptionsLookup::class ),
 			$userFactory ?? $this->createMock( UserFactory::class ),
-			$readOnlyMode ?? $this->createMock( self::readOnlyModeClass() )
+			$readOnlyMode ?? $this->createMock( ReadOnlyMode::class )
 		);
 	}
 
@@ -116,7 +107,7 @@ class CategoryWatchNotifierTest extends MediaWikiUnitTestCase {
 	}
 
 	public function testAddUserBatchForWatchReturnsFalseWhenReadOnly(): void {
-		$readOnlyMode = $this->createMock( self::readOnlyModeClass() );
+		$readOnlyMode = $this->createMock( ReadOnlyMode::class );
 		$readOnlyMode->method( 'isReadOnly' )->willReturn( true );
 		$notifier = $this->newNotifier( null, null, null, null, $readOnlyMode );
 
