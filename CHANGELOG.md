@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI runner pinned to `ubuntu-24.04`, `actions/checkout` and `codecov/codecov-action`
   bumped, and the coverage matrix row's coverage output path aligned with the
   `build/coverage/php` convention used by the docker-compose-ci submodule.
+- `.phpcs.xml` now excludes `vendor/`, `node_modules/`, `build/`, and `coverage/` so
+  build artifacts are no longer scanned.
 
 ## [2.0.1] - 2026-08-12
 
