@@ -15,7 +15,8 @@ module.exports = function ( grunt ) {
 				'**/*.{js,json}',
 				'!node_modules/**',
 				'!vendor/**',
-				'!build/**'
+				'!build/**',
+				'!coverage/**'
 			]
 		}
 	} );

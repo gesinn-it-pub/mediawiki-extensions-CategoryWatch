@@ -17,3 +17,4 @@ PHPTAGS.sqlite
 /vendor
 /composer.lock
 /.eslintcache
+/coverage
