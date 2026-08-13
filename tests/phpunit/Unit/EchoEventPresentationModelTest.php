@@ -87,4 +87,56 @@ class EchoEventPresentationModelTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( $title->getFullURL(), $link['url'] );
 		$this->assertSame( $title->getPrefixedText(), $link['label'] );
 	}
+
+	private function newUnbundledEventWithAgent(): EchoEvent {
+		$event = $this->newEvent();
+		$event->method( 'getTitle' )->willReturn( Title::makeTitle( NS_CATEGORY, 'SomeWatchedCategory' ) );
+		$event->method( 'getAgent' )->willReturn( $this->getTestUser()->getUser() );
+		$event->method( 'getBundledEvents' )->willReturn( [] );
+		$event->method( 'getExtraParam' )->with( 'pageid' )->willReturn( 0 );
+		return $event;
+	}
+
+	public function testGetHeaderMessageForUnbundledEvent(): void {
+		$model = $this->newModel( $this->newUnbundledEventWithAgent() );
+
+		$this->assertStringContainsString( 'added to', $model->getHeaderMessage()->text() );
+	}
+
+	public function testGetCompactHeaderMessageIncludesViewingUserGender(): void {
+		$model = $this->newModel( $this->newUnbundledEventWithAgent() );
+
+		$this->assertNotSame( '', $model->getCompactHeaderMessage()->text() );
+	}
+
+	public function testGetRevisionEditSummaryForUnbundledEvent(): void {
+		$model = $this->newModel( $this->newUnbundledEventWithAgent() );
+
+		$this->assertStringContainsString( 'added to', $model->getRevisionEditSummary()->text() );
+	}
+
+	public function testGetBodyMessageForUnbundledEvent(): void {
+		$model = $this->newModel( $this->newUnbundledEventWithAgent() );
+
+		$this->assertStringContainsString( 'added', $model->getBodyMessage()->text() );
+	}
+
+	public function testGetSecondaryLinksForUnbundledEventIncludesAgentAndPageLink(): void {
+		$model = $this->newModel( $this->newUnbundledEventWithAgent() );
+
+		$this->assertCount( 2, $model->getSecondaryLinks() );
+	}
+
+	public function testJsonSerializeReturnsExpectedStructure(): void {
+		$model = $this->newModel( $this->newUnbundledEventWithAgent() );
+
+		$data = $model->jsonSerialize();
+
+		$this->assertArrayHasKey( 'header', $data );
+		$this->assertArrayHasKey( 'compactHeader', $data );
+		$this->assertArrayHasKey( 'body', $data );
+		$this->assertSame( 'categorywatch', $data['icon'] );
+		$this->assertArrayHasKey( 'primary', $data['links'] );
+		$this->assertArrayHasKey( 'secondary', $data['links'] );
+	}
 }
