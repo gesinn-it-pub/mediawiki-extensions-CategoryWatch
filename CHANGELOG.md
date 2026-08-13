@@ -11,7 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Unit test coverage for `Hook`, `CategoryWatchHooks`, `CategoryWatchNotifier`, and
   `EchoEventPresentationModel` — the extension previously shipped with zero PHPUnit
-  tests despite having a `tests/phpunit/Unit` directory.
+  tests despite having a `tests/phpunit/Unit` directory. Coverage on the MW 1.43 CI
+  leg (Echo loaded) is now 100% lines on `Hook` and `CategoryWatchHooks`, 93% on
+  `EchoEventPresentationModel`, and 61% on `CategoryWatchNotifier` — the remaining
+  gaps are the `EchoEvent::create()` side-effect calls and the low-traffic
+  bundled-notification branches, neither of which is meaningfully unit-testable.
 
 ### Changed
 
