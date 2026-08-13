@@ -37,7 +37,7 @@ class CategoryWatchHooks implements
 	/**
 	 * Hook for page being added to a category.
 	 *
-	 * @param \Category $category that page is being added to
+	 * @param \MediaWiki\Category\Category $category that page is being added to
 	 * @param \WikiPage $wikiPage that is being added
 	 */
 	public function onCategoryAfterPageAdded( $category, $wikiPage ) {
@@ -48,7 +48,7 @@ class CategoryWatchHooks implements
 	/**
 	 * Hook for page being taken out of a category.
 	 *
-	 * @param \Category $category that page is being removed from
+	 * @param \MediaWiki\Category\Category $category that page is being removed from
 	 * @param \WikiPage $wikiPage that is being removed
 	 * @param int $id Page ID that this happened in. (not given pre 1.27ish)
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)

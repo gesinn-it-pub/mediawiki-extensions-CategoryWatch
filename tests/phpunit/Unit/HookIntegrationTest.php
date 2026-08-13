@@ -5,8 +5,8 @@ namespace CategoryWatch\Tests\Unit;
 use CategoryWatch\CategoryWatchNotifier;
 use CategoryWatch\Hook;
 use EchoEvent;
+use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
-use Title;
 use User;
 
 /**

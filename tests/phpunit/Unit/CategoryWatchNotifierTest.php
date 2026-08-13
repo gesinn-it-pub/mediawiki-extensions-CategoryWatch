@@ -2,12 +2,12 @@
 
 namespace CategoryWatch\Tests\Unit;
 
-use Category;
 use CategoryWatch\CategoryWatchNotifier;
+use MediaWiki\Category\Category;
+use MediaWiki\Title\Title;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserOptionsLookup;
 use MediaWikiUnitTestCase;
-use Title;
 use User;
 use WatchedItemStoreInterface;
 use Wikimedia\Rdbms\IDatabase;

@@ -2,9 +2,9 @@
 
 namespace CategoryWatch\Tests\Unit;
 
-use Category;
 use CategoryWatch\CategoryWatchHooks;
 use CategoryWatch\CategoryWatchNotifier;
+use MediaWiki\Category\Category;
 use MediaWikiUnitTestCase;
 use User;
 use WikiPage;

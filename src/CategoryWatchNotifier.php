@@ -21,11 +21,11 @@
  */
 namespace CategoryWatch;
 
-use Category;
 use EchoEvent;
+use MediaWiki\Category\Category;
+use MediaWiki\Title\Title;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserOptionsLookup;
-use Title;
 use WatchedItemStoreInterface;
 use Wikimedia\Rdbms\ILoadBalancer;
 use Wikimedia\Rdbms\ReadOnlyMode;

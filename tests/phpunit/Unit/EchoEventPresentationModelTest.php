@@ -4,9 +4,9 @@ namespace CategoryWatch\Tests\Unit;
 
 use CategoryWatch\EchoEventPresentationModel;
 use EchoEvent;
+use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
 use RequestContext;
-use Title;
 
 /**
  * @covers \CategoryWatch\EchoEventPresentationModel
