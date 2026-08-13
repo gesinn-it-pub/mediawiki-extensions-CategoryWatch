@@ -1,5 +1,7 @@
 # CategoryWatch
 
+[![CI](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/actions/workflows/ci.yml/badge.svg)](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/actions/workflows/ci.yml)
+
 Main development Git repository on Gerrit: https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/CategoryWatch
 
 Here is the Phabricator Diffusion: https://phabricator.wikimedia.org/diffusion/ECWA/
