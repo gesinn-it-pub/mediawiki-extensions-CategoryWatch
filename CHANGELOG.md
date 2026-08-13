@@ -39,6 +39,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Doc-block of `$event` in `Hook::onEchoGetBundleRules()` declared a non-existent
   `Event` type instead of `EchoEvent`.
 
+### Removed
+
+- Packagist publishing metadata (`name`, `type`, `keywords`, `homepage`, `license`)
+  from `composer.json`: `mediawiki/category-watch` was never actually published on
+  Packagist, so the fields only implied an installation path that doesn't work.
+  `composer.json` remains usable for local dev tooling (CI, linting, tests).
+
 ## [2.0.1] - 2026-08-12
 
 ### Changed
