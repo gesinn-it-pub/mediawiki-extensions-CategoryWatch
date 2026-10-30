@@ -1,0 +1,6 @@
+coverage:
+  status:
+    project:
+      default:
+        # PCOV and Xdebug count executable lines slightly differently
+        threshold: 0.5%
