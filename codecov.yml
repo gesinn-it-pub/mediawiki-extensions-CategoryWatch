@@ -1,3 +1,6 @@
+fixes:
+  - "/var/www/html/extensions/CategoryWatch/::"
+
 coverage:
   status:
     project:

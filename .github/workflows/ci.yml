@@ -61,6 +61,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: gesinn-it-pub/mediawiki-extensions-CategoryWatch
           files: build/coverage/php/coverage.xml
+          disable_search: true
         if: matrix.coverage == true
 
       - name: Run Phan
