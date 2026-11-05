@@ -87,4 +87,12 @@ class HookTest extends MediaWikiUnitTestCase {
 
 		$this->assertSame( [ $agent ], Hook::userFilter( $event ) );
 	}
+
+	public function testUserFilterReturnsNothingWhenEventHasNoAgent(): void {
+		$this->requireEcho();
+		$event = $this->createMock( EchoEvent::class );
+		$event->method( 'getAgent' )->willReturn( null );
+
+		$this->assertSame( [], Hook::userFilter( $event ) );
+	}
 }
