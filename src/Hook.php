@@ -102,13 +102,16 @@ class Hook {
 	}
 
 	/**
-	 * Filter out the person performing the action
+	 * Filter out the person performing the action.
+	 *
+	 * Events without an agent (e.g. a page removed from a category by a deletion) have nobody to filter out.
 	 *
 	 * @param EchoEvent $event to be looked at
 	 * @return array
 	 */
 	public static function userFilter( EchoEvent $event ) {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
-		return [ $event->getAgent() ];
+		$agent = $event->getAgent();
+		return $agent ? [ $agent ] : [];
 	}
 }

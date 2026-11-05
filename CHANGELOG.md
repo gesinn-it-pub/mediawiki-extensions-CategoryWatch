@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `Hook::userFilter()` no longer returns `[ null ]` for Echo events without an agent (e.g. a page removed
+  from a category by a deletion). Echo threw a `TypeError` in the notification job for such events, so the
+  notification was never delivered.
+
 ## [3.0.0] - 2026-08-13
 
 Raises the minimum supported MediaWiki version to 1.39, extracts the notification
