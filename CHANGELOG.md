@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Documentation
+
+- Fixed the Codecov badge in the README: it now points at the `master` branch, so it
+  shows the coverage instead of "unknown".
+
 ## [4.0.0] - 2026-08-13
 
 Raises the minimum supported MediaWiki version to 1.43 and removes the

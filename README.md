@@ -1,7 +1,7 @@
 # CategoryWatch
 
 [![CI](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/actions/workflows/ci.yml/badge.svg)](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/github/gesinn-it-pub/mediawiki-extensions-CategoryWatch/graph/badge.svg)](https://codecov.io/github/gesinn-it-pub/mediawiki-extensions-CategoryWatch)
+[![codecov](https://codecov.io/gh/gesinn-it-pub/mediawiki-extensions-CategoryWatch/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gesinn-it-pub/mediawiki-extensions-CategoryWatch)
 
 Main development Git repository on Gerrit: https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/CategoryWatch
 
