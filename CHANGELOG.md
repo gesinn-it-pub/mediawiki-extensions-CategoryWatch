@@ -7,16 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.1] - 2026-11-05
+
+Fixes notifications that were silently lost for events without a user.
+
 ### Fixed
 
-- `Hook::userFilter()` no longer returns `[ null ]` for Echo events without an agent (e.g. a page removed
-  from a category by a deletion). Echo threw a `TypeError` in the notification job for such events, so the
-  notification was never delivered.
+- Fix lost notifications for events without a user, such as a page removed from a category by a deletion
+  [`b8980a9`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/b8980a9)
 
-### Documentation
+### Changed
 
-- Fixed the Codecov badge in the README: it now points at the `master` branch, so it
-  shows the coverage instead of "unknown".
+- Fix the coverage badge in the README so it shows the current coverage
+  [`cbb0451`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/cbb0451)
 
 ## [4.0.0] - 2026-08-13
 
@@ -196,7 +199,8 @@ coverage.
 
 - `tests/phpunit/Unit` directory scaffolded for future PHPUnit coverage.
 
-[Unreleased]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/4.0.0...HEAD
+[Unreleased]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/4.0.1...HEAD
+[4.0.1]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/4.0.0...4.0.1
 [4.0.0]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/2.0.1...3.0.0
 [2.0.1]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/releases/tag/2.0.1
