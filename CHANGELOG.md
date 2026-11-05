@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2026-11-05
+
+Fixes notifications that were silently lost for events without a user.
+
 ### Fixed
 
-- `Hook::userFilter()` no longer returns `[ null ]` for Echo events without an agent (e.g. a page removed
-  from a category by a deletion). Echo threw a `TypeError` in the notification job for such events, so the
-  notification was never delivered.
+- Fix lost notifications for events without a user, such as a page removed from a category by a deletion
+  [`9bd5981`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/9bd5981)
 
 ## [3.0.0] - 2026-08-13
 
@@ -144,6 +147,7 @@ coverage.
 
 - `tests/phpunit/Unit` directory scaffolded for future PHPUnit coverage.
 
-[Unreleased]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/3.0.0...HEAD
+[Unreleased]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/3.0.1...HEAD
+[3.0.1]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/2.0.1...3.0.0
 [2.0.1]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/releases/tag/2.0.1
