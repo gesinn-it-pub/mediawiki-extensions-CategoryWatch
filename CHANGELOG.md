@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Do not send notifications for pages that cannot be resolved any more instead of rendering a `Badtitle` placeholder
-  [`9f3c118`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/9f3c118)
+  [`6ce1f17`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/6ce1f17)
 
 ## [4.0.1] - 2026-11-05
 
