@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Do not send notifications for pages that cannot be resolved any more instead of rendering a `Badtitle` placeholder
+  [`9f3c118`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/9f3c118)
+
 ## [4.0.1] - 2026-11-05
 
 Fixes notifications that were silently lost for events without a user.
