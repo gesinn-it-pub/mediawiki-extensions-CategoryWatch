@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.2] - 2026-11-06
+
+Stops notifications that referred to pages that no longer exist.
+
 ### Fixed
 
-- Do not send notifications for pages that cannot be resolved any more instead of rendering a `Badtitle` placeholder
+- Do not send notifications for pages that no longer exist; they were shown and mailed with a meaningless
+  "Badtitle" page name and an empty user
   [`6ce1f17`](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/commit/6ce1f17)
+  ([#8](https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/issues/8))
 
 ## [4.0.1] - 2026-11-05
 
@@ -204,7 +210,8 @@ coverage.
 
 - `tests/phpunit/Unit` directory scaffolded for future PHPUnit coverage.
 
-[Unreleased]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/4.0.1...HEAD
+[Unreleased]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/4.0.2...HEAD
+[4.0.2]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/4.0.1...4.0.2
 [4.0.1]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/4.0.0...4.0.1
 [4.0.0]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/gesinn-it-pub/mediawiki-extensions-CategoryWatch/compare/2.0.1...3.0.0
