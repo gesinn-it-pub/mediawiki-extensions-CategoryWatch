@@ -43,12 +43,34 @@ class EchoEventPresentationModelTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( 'categorywatch', $model->getIconType() );
 	}
 
-	public function testCanRenderIsTrueWhenEventHasTitle(): void {
+	public function testCanRenderIsTrueWhenEventHasTitleAndPageExists(): void {
+		$page = $this->getExistingTestPage( 'CategoryWatchTestPage' );
 		$event = $this->newEvent();
 		$event->method( 'getTitle' )->willReturn( Title::makeTitle( NS_CATEGORY, 'SomeCategory' ) );
+		$event->method( 'getExtraParam' )->with( 'pageid' )->willReturn( $page->getId() );
 		$model = $this->newModel( $event );
 
 		$this->assertTrue( $model->canRender() );
+	}
+
+	/**
+	 * @dataProvider unresolvablePageIdProvider
+	 */
+	public function testCanRenderIsFalseWhenPageCannotBeResolved( $pageId ): void {
+		$event = $this->newEvent();
+		$event->method( 'getTitle' )->willReturn( Title::makeTitle( NS_CATEGORY, 'SomeCategory' ) );
+		$event->method( 'getExtraParam' )->with( 'pageid' )->willReturn( $pageId );
+		$model = $this->newModel( $event );
+
+		$this->assertFalse( $model->canRender() );
+	}
+
+	public static function unresolvablePageIdProvider(): array {
+		return [
+			'missing pageid (older events)' => [ null ],
+			'pageid 0' => [ 0 ],
+			'pageid of a deleted page' => [ 2147483000 ],
+		];
 	}
 
 	public function testCanRenderIsFalseWhenEventHasNoTitle(): void {

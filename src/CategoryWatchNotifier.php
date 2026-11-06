@@ -64,7 +64,7 @@ class CategoryWatchNotifier {
 
 		# Is anyone watching the category?
 		$hasWatchers = $this->watchedItemStore->countWatchers( $catTitle ) > 0;
-		if ( $this->automaticallyWatchingUser( $catTitle ) || $hasWatchers ) {
+		if ( $page->getId() > 0 && ( $this->automaticallyWatchingUser( $catTitle ) || $hasWatchers ) ) {
 			# Send them a notification!
 			$user = $this->userFactory->newFromId( $page->getUser() );
 
@@ -98,7 +98,7 @@ class CategoryWatchNotifier {
 	public function notifyPageRemoved( Category $cat, WikiPage $page ) {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
 		# Is anyone watching the category?
-		if ( $this->watchedItemStore->countWatchers( $cat->getTitle() ) > 0 ) {
+		if ( $page->getId() > 0 && $this->watchedItemStore->countWatchers( $cat->getTitle() ) > 0 ) {
 			# Send them a notification!
 			$user = $this->userFactory->newFromId( $page->getUser() );
 

@@ -26,16 +26,20 @@ namespace CategoryWatch;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Message;
+use WikiPage;
 
 class EchoEventPresentationModel extends \EchoEventPresentationModel {
 	/**
 	 * Tell the caller if this event can be rendered.
 	 *
+	 * An event whose page cannot be resolved any more (e.g. deleted or without a page id) carries
+	 * no useful information, so Echo neither shows nor mails it.
+	 *
 	 * @return bool
 	 */
 	public function canRender() {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
-		return (bool)$this->event->getTitle();
+		return $this->event->getTitle() && $this->findPage() !== null;
 	}
 
 	/**
@@ -119,9 +123,19 @@ class EchoEventPresentationModel extends \EchoEventPresentationModel {
 	 */
 	public function getPageTitle() {
 		wfDebugLog( 'CategoryWatch', __METHOD__ );
-		$page = MediaWikiServices::getInstance()->getWikiPageFactory()
-			->newFromID( $this->event->getExtraParam( "pageid" ) );
+		$page = $this->findPage();
 		return $page ? $page->getTitle() : Title::makeTitle( NS_SPECIAL, 'Badtitle/' . __METHOD__ );
+	}
+
+	/**
+	 * @return WikiPage|null the page the event refers to, null if it cannot be resolved
+	 */
+	private function findPage(): ?WikiPage {
+		$pageId = (int)$this->event->getExtraParam( 'pageid' );
+		if ( $pageId <= 0 ) {
+			return null;
+		}
+		return MediaWikiServices::getInstance()->getWikiPageFactory()->newFromID( $pageId );
 	}
 
 	/**
