@@ -217,4 +217,47 @@ class CategoryWatchNotifierTest extends MediaWikiUnitTestCase {
 
 		$this->addToAssertionCount( 1 );
 	}
+
+	public function testNotifyPageAddedCreatesNoEventForPageWithoutId(): void {
+		$catTitle = $this->createMock( Title::class );
+		$cat = $this->createConfiguredMock( Category::class, [ 'getTitle' => $catTitle ] );
+		$page = $this->createMock( WikiPage::class );
+		$page->method( 'getId' )->willReturn( 0 );
+		$page->method( 'getTitle' )->willReturn( $this->createMock( Title::class ) );
+
+		$watchedItemStore = $this->createMock( WatchedItemStoreInterface::class );
+		$watchedItemStore->method( 'countWatchers' )->willReturn( 1 );
+
+		$db = $this->createMock( IDatabase::class );
+		$db->method( 'selectFieldValues' )->willReturn( [] );
+		$loadBalancer = $this->createMock( ILoadBalancer::class );
+		$loadBalancer->method( 'getConnection' )->willReturn( $db );
+
+		// The agent is only resolved right before the event is created.
+		$userFactory = $this->createMock( UserFactory::class );
+		$userFactory->expects( $this->never() )->method( 'newFromId' );
+
+		$notifier = $this->newNotifier( $watchedItemStore, $loadBalancer, null, $userFactory );
+		$notifier->notifyPageAdded( $cat, $page );
+
+		$this->addToAssertionCount( 1 );
+	}
+
+	public function testNotifyPageRemovedCreatesNoEventForPageWithoutId(): void {
+		$catTitle = $this->createMock( Title::class );
+		$cat = $this->createConfiguredMock( Category::class, [ 'getTitle' => $catTitle ] );
+		$page = $this->createMock( WikiPage::class );
+		$page->method( 'getId' )->willReturn( 0 );
+
+		$watchedItemStore = $this->createMock( WatchedItemStoreInterface::class );
+		$watchedItemStore->method( 'countWatchers' )->willReturn( 1 );
+
+		$userFactory = $this->createMock( UserFactory::class );
+		$userFactory->expects( $this->never() )->method( 'newFromId' );
+
+		$notifier = $this->newNotifier( $watchedItemStore, null, null, $userFactory );
+		$notifier->notifyPageRemoved( $cat, $page );
+
+		$this->addToAssertionCount( 1 );
+	}
 }
